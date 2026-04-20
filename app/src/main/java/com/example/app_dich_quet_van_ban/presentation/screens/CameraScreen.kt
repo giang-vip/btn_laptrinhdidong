@@ -3,6 +3,8 @@ package com.example.app_dich_quet_van_ban.presentation.screens
 import android.util.Log
 import android.view.ViewGroup
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -12,6 +14,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -48,6 +51,8 @@ fun CameraScreen(
     val primaryColorArgb = MaterialTheme.colorScheme.primary.toArgb()
     val onPrimaryColorArgb = MaterialTheme.colorScheme.onPrimary.toArgb()
 
+
+
     // Launcher xử lý Cắt ảnh (Chỉ lo phần UI Cắt ảnh)
     val cropImageLauncher = rememberLauncherForActivityResult(
         CropImageContract()
@@ -61,7 +66,22 @@ fun CameraScreen(
             }
         }
     }
-
+    //Khai báo Launcher để chọn ảnh từ Thư viện
+    val pickMediaLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        if (uri != null) {
+            // Sau khi chọn ảnh xong, gửi ngay sang Launcher Cắt ảnh
+            cropImageLauncher.launch(
+                CropImageContractOptions(uri, CropImageOptions(
+                    guidelines = CropImageView.Guidelines.ON,
+                    activityTitle = "Cắt lấy phần văn bản",
+                    toolbarColor = primaryColorArgb,
+                    toolbarTitleColor = onPrimaryColorArgb
+                ))
+            )
+        }
+    }
     // Kiểm tra quyền (Giữ nguyên logic của bạn)
     val hasPermission = remember {
         ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA) == android.content.pm.PackageManager.PERMISSION_GRANTED
@@ -133,38 +153,98 @@ fun CameraScreen(
         }
 
         // Nút Chụp
-        Button(
-            onClick = {
-                val file = File(context.cacheDir, "temp_${System.currentTimeMillis()}.jpg")
-                val outputOptions = ImageCapture.OutputFileOptions.Builder(file).build()
+//        Button(
+//            onClick = {
+//                val file = File(context.cacheDir, "temp_${System.currentTimeMillis()}.jpg")
+//                val outputOptions = ImageCapture.OutputFileOptions.Builder(file).build()
+//
+//                imageCapture.takePicture(
+//                    outputOptions,
+//                    ContextCompat.getMainExecutor(context),
+//                    object : ImageCapture.OnImageSavedCallback {
+//                        override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+//                            outputFileResults.savedUri?.let { uri ->
+//                                // Gọi launcher cắt ảnh
+//                                cropImageLauncher.launch(
+//                                    CropImageContractOptions(uri, CropImageOptions(
+//                                        guidelines = CropImageView.Guidelines.ON,
+//                                        activityTitle = "Cắt lấy phần văn bản",
+//                                        toolbarColor = primaryColorArgb,
+//                                        toolbarTitleColor = onPrimaryColorArgb
+//                                    ))
+//                                )
+//                            }
+//                        }
+//                        override fun onError(exception: ImageCaptureException) {
+//                            Log.e("Camera", "Lỗi chụp: ${exception.message}")
+//                        }
+//                    }
+//                )
+//            },
+//            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 50.dp),
+//            enabled = !viewModel.isProcessing // Vô hiệu hóa khi đang quét
+//        ) {
+//            Text(if (viewModel.isProcessing) "Đang quét..." else "Chụp và Cắt")
+//        }
+        // 2. Giao diện các nút điều khiển ở dưới cùng
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 50.dp, start = 20.dp, end = 20.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // NÚT CHỌN ẢNH TỪ THƯ VIỆN
+            FilledIconButton(
+                onClick = {
+                    pickMediaLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                },
+                modifier = Modifier.size(56.dp),
+                colors = IconButtonDefaults.filledIconButtonColors(
+                    containerColor = Color.White.copy(alpha = 0.2f)
+                ),
+                enabled = !viewModel.isProcessing
+            ) {
+                Icon(Icons.Default.PhotoLibrary, contentDescription = "Gallery", tint = Color.White)
+            }
 
-                imageCapture.takePicture(
-                    outputOptions,
-                    ContextCompat.getMainExecutor(context),
-                    object : ImageCapture.OnImageSavedCallback {
-                        override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                            outputFileResults.savedUri?.let { uri ->
-                                // Gọi launcher cắt ảnh
-                                cropImageLauncher.launch(
-                                    CropImageContractOptions(uri, CropImageOptions(
-                                        guidelines = CropImageView.Guidelines.ON,
-                                        activityTitle = "Cắt lấy phần văn bản",
-                                        toolbarColor = primaryColorArgb,
-                                        toolbarTitleColor = onPrimaryColorArgb
-                                    ))
-                                )
+            // NÚT CHỤP ẢNH (Giữ nguyên logic của bạn)
+            Button(
+                onClick = {
+                    val file = File(context.cacheDir, "temp_${System.currentTimeMillis()}.jpg")
+                    val outputOptions = ImageCapture.OutputFileOptions.Builder(file).build()
+
+                    imageCapture.takePicture(
+                        outputOptions,
+                        ContextCompat.getMainExecutor(context),
+                        object : ImageCapture.OnImageSavedCallback {
+                            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                                outputFileResults.savedUri?.let { uri ->
+                                    cropImageLauncher.launch(
+                                        CropImageContractOptions(uri, CropImageOptions(
+                                            guidelines = CropImageView.Guidelines.ON,
+                                            activityTitle = "Cắt lấy phần văn bản",
+                                            toolbarColor = primaryColorArgb,
+                                            toolbarTitleColor = onPrimaryColorArgb
+                                        ))
+                                    )
+                                }
+                            }
+                            override fun onError(exception: ImageCaptureException) {
+                                Log.e("Camera", "Lỗi chụp: ${exception.message}")
                             }
                         }
-                        override fun onError(exception: ImageCaptureException) {
-                            Log.e("Camera", "Lỗi chụp: ${exception.message}")
-                        }
-                    }
-                )
-            },
-            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 50.dp),
-            enabled = !viewModel.isProcessing // Vô hiệu hóa khi đang quét
-        ) {
-            Text(if (viewModel.isProcessing) "Đang quét..." else "Chụp và Cắt")
+                    )
+                },
+                modifier = Modifier.height(56.dp).weight(1f).padding(horizontal = 16.dp),
+                enabled = !viewModel.isProcessing
+            ) {
+                Text(if (viewModel.isProcessing) "Đang quét..." else "Chụp và Cắt")
+            }
+
+            // Có thể thêm một nút nữa ở đây để cân bằng UI (ví dụ nút Flash hoặc Đổi camera)
+            Spacer(modifier = Modifier.size(56.dp))
         }
     }
 }
