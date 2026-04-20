@@ -98,9 +98,12 @@ fun ScanScreen(
                 doc = doc,
                 onDelete = { viewModel.deleteDocument(doc) },
                 onViewClick = {
-                    // Khi bấm View, nó sẽ dẫn bạn sang màn hình kết quả với nội dung đã lưu
+                    // 1. Mã hóa nội dung để URL không bị lỗi nếu văn bản có dấu cách/xuống dòng
                     val encodedContent = java.net.URLEncoder.encode(doc.content, "UTF-8")
-                    navController.navigate(Screen.ScanResult.route + "/${doc.content}")
+
+                    // 2. QUAN TRỌNG: Truyền ID của tệp này qua tham số docId
+                    // Cấu trúc: Route + /Nội_dung?docId=Số_ID
+                    navController.navigate(Screen.ScanResult.route + "/${encodedContent}?docId=${doc.id}")
                 }
             )
         }

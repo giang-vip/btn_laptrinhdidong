@@ -39,4 +39,8 @@ class TranslationRepositoryImpl(private val scanDao: ScanDao) : TranslationRepos
     override fun searchDocs(query: String): Flow<List<ScannedDocEntity>> {
         return scanDao.searchDocs(query)
     }
+
+    override fun updateDoc(updatedDoc: ScannedDocEntity) {
+        TODO("Not yet implemented")
+    }
 }

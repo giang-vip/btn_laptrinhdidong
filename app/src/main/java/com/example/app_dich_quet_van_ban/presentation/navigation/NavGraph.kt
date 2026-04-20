@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.app_dich_quet_van_ban.presentation.screens.* // Import tất cả màn hình
 import com.example.app_dich_quet_van_ban.presentation.viewmodel.ScanViewModel
 
@@ -57,28 +59,34 @@ fun NavGraph(navController: NavHostController, paddingValues: PaddingValues) {
         }
 
         // --- 5. MÀN HÌNH XEM KẾT QUẢ & LƯU FILE ---
-        composable(Screen.ScanResult.route + "/{scannedText}") { backStackEntry ->
-            // 1. Lấy chuỗi đã bị mã hóa từ URL
+        // Sử dụng ?docId={docId} để làm tham số tùy chọn
+        composable(
+            route = Screen.ScanResult.route + "/{scannedText}?docId={docId}",
+            arguments = listOf(
+                navArgument("scannedText") { type = NavType.StringType },
+                navArgument("docId") {
+                    type = NavType.IntType
+                    defaultValue = 0 // Nếu từ Camera sang thì ID = 0
+                }
+            )
+        ) { backStackEntry ->
             val rawText = backStackEntry.arguments?.getString("scannedText") ?: ""
+            val docId = backStackEntry.arguments?.getInt("docId") ?: 0
 
-            // 2. GIẢI MÃ nó ra lại thành văn bản bình thường (có dấu cách, xuống dòng)
             val decodedText = try {
                 java.net.URLDecoder.decode(rawText, "UTF-8")
             } catch (e: Exception) {
-                rawText // Nếu lỗi thì lấy bản gốc
+                rawText
             }
 
-            val viewModel: ScanViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
-
             ScanResultScreen(
-                scannedText = decodedText, // Truyền văn bản ĐÃ GIẢI MÃ vào đây
+                scannedText = decodedText,
+                docId = docId, // TRUYỀN ID VÀO ĐÂY
                 onNavigateBack = { navController.popBackStack() },
-                onSaveComplete = { name, content, type ->
-                    viewModel.addDocument(name, type, content)
-                    navController.navigate(Screen.Scan.route) {
-                        popUpTo(Screen.Scan.route) { inclusive = true }
-                    }
-                }
+//                onSaveComplete = { name, content, type ->
+//                    // Bạn có thể giữ hoặc xóa lambda này tùy vào việc
+//                    // bạn đã xử lý lưu trong ViewModel của ScanResultScreen chưa.
+//                }
             )
         }
 

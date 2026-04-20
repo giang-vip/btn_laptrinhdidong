@@ -11,4 +11,5 @@ interface TranslationRepository {
     // THÊM DÒNG NÀY:
     suspend fun getDocByTitle(fileName: String): ScannedDocEntity?
     fun searchDocs(query: String): Flow<List<ScannedDocEntity>>
+    fun updateDoc(updatedDoc: com.example.app_dich_quet_van_ban.data.local.entity.ScannedDocEntity)
 }

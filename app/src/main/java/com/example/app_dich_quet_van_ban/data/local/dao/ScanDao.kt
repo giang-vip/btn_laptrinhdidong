@@ -30,6 +30,10 @@ interface ScanDao {
     @Query("SELECT * FROM scanned_docs WHERE fileName = :title LIMIT 1")
     suspend fun getDocByTitle(title: String): ScannedDocEntity?
 
+    // --- ĐÂY LÀ HÀM BẠN ĐANG THIẾU ---
+    @Query("SELECT * FROM scanned_docs WHERE id = :id LIMIT 1")
+    suspend fun getDocById(id: Int): ScannedDocEntity?
+
     // Thêm hàm tìm kiếm theo tên (Kính lúp)
     @Query("SELECT * FROM scanned_docs WHERE fileName LIKE '%' || :query || '%' ORDER BY createdAt DESC")
     fun searchDocs(query: String): Flow<List<ScannedDocEntity>>
