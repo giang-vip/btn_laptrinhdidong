@@ -10,7 +10,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.app_dich_quet_van_ban.presentation.screens.* // Import tất cả màn hình
-import com.example.app_dich_quet_van_ban.presentation.viewmodel.ScanViewModel
+import com.example.app_dich_quet_van_ban.presentation.screens.Screens_Scan.CameraScreen
+import com.example.app_dich_quet_van_ban.presentation.screens.Screens_Scan.ScanResultScreen
+import com.example.app_dich_quet_van_ban.presentation.screens.Screens_Scan.ScanScreen
+import com.example.app_dich_quet_van_ban.presentation.screens.Screens_Translate.TranslateScreen
 
 @Composable
 fun NavGraph(navController: NavHostController, paddingValues: PaddingValues) {

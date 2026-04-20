@@ -1,10 +1,9 @@
-package com.example.app_dich_quet_van_ban.presentation.viewmodel
+package com.example.app_dich_quet_van_ban.presentation.viewmodel.Viewmodel_Scan
 
 import android.app.Application
 import android.content.Context
 import android.net.Uri
 import android.util.Log
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue

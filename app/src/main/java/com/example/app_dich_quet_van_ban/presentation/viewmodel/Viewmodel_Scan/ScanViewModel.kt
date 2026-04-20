@@ -1,30 +1,21 @@
-package com.example.app_dich_quet_van_ban.presentation.viewmodel
-
+package com.example.app_dich_quet_van_ban.presentation.viewmodel.Viewmodel_Scan
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.app_dich_quet_van_ban.data.local.AppDatabase
 import com.example.app_dich_quet_van_ban.data.local.entity.ScannedDocEntity
-import com.google.ai.client.generativeai.GenerativeModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONArray
-import org.json.JSONObject
-import java.io.IOException
-import android.util.Log
 
 class ScanViewModel(application: Application) : AndroidViewModel(application) {
-    private val scanDao = AppDatabase.getDatabase(application).scanDao()
+    private val scanDao = AppDatabase.Companion.getDatabase(application).scanDao()
 
     // Chuyển Flow thành StateFlow để UI dễ quan sát hơn trong Compose
     val allDocs: StateFlow<List<ScannedDocEntity>> = scanDao.getAllScannedDocs()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+        .stateIn(viewModelScope, SharingStarted.Companion.WhileSubscribed(5000), emptyList())
     // Sửa tham số: Thêm 'content' và 'filePath' để lấy dữ liệu thực tế
     fun addDocument(name: String, filePath: String, content: String) {
         viewModelScope.launch {
@@ -58,5 +49,3 @@ class ScanViewModel(application: Application) : AndroidViewModel(application) {
 
 
 }
-
-

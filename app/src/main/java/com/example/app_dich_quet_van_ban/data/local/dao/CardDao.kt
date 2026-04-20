@@ -1,0 +1,25 @@
+package com.example.app_dich_quet_van_ban.data.local.dao
+
+import androidx.room.*
+import com.example.app_dich_quet_van_ban.data.local.entity.CardEntity
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface CardDao {
+    // Lấy tất cả thẻ trong một Deck (Bộ từ vựng)
+    @Query("SELECT * FROM cards WHERE deckId = :dId")
+    fun getCardsByDeckId(dId: Int): Flow<List<CardEntity>>
+
+    // Lấy một thẻ cụ thể theo ID
+    @Query("SELECT * FROM cards WHERE cardId = :cId")
+    suspend fun getCardById(cId: Int): CardEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCard(card: CardEntity): Long
+
+    @Update
+    suspend fun updateCard(card: CardEntity)
+
+    @Delete
+    suspend fun deleteCard(card: CardEntity)
+}

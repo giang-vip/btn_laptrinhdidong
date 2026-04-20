@@ -1,4 +1,4 @@
-package com.example.app_dich_quet_van_ban.presentation.screens
+package com.example.app_dich_quet_van_ban.presentation.screens.Screens_Translate
 
 import android.app.Activity
 import android.content.Intent
@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.app_dich_quet_van_ban.presentation.theme.*
-import com.example.app_dich_quet_van_ban.presentation.viewmodel.TranslationViewModel
+import com.example.app_dich_quet_van_ban.presentation.viewmodel.Viewmodel_Translate.TranslationViewModel
 import java.util.Locale
 
 @Composable

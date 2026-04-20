@@ -1,7 +1,8 @@
-package com.example.app_dich_quet_van_ban.presentation.viewmodel
-
+package com.example.app_dich_quet_van_ban.presentation.viewmodel.Viewmodel_Scan
 
 import android.app.Application
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,7 +23,7 @@ import org.json.JSONObject
 import java.io.IOException
 
 class ScanResultViewModel(application: Application) : AndroidViewModel(application) {
-    private val scanDao = AppDatabase.getDatabase(application).scanDao()
+    private val scanDao = AppDatabase.Companion.getDatabase(application).scanDao()
 
 
     // Biến để giữ ID của file hiện tại
@@ -110,10 +111,10 @@ class ScanResultViewModel(application: Application) : AndroidViewModel(applicati
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     // In lỗi ra Logcat để kiểm tra trên máy tính
-                    android.util.Log.e("FLASK_ERROR", "--- LỖI KẾT NỐI API LOCAL ---")
+                    Log.e("FLASK_ERROR", "--- LỖI KẾT NỐI API LOCAL ---")
                     e.printStackTrace()
 
-                    android.os.Handler(android.os.Looper.getMainLooper()).post {
+                    Handler(Looper.getMainLooper()).post {
                         onResult("Lỗi kết nối máy chủ: ${e.message}")
                     }
                 }
@@ -121,7 +122,7 @@ class ScanResultViewModel(application: Application) : AndroidViewModel(applicati
                 override fun onResponse(call: Call, response: Response) {
                     val responseBody = response.body?.string()
                     // In log phản hồi từ Flask ra Console máy tính
-                    android.util.Log.d("FLASK_DEBUG", "Status: ${response.code}, Body: $responseBody")
+                    Log.d("FLASK_DEBUG", "Status: ${response.code}, Body: $responseBody")
 
                     if (response.isSuccessful && responseBody != null) {
                         try {
@@ -129,16 +130,16 @@ class ScanResultViewModel(application: Application) : AndroidViewModel(applicati
                             // Lấy giá trị từ key 'summary' mà Flask trả về
                             val result = jsonResponse.getString("summary")
 
-                            android.os.Handler(android.os.Looper.getMainLooper()).post {
+                            Handler(Looper.getMainLooper()).post {
                                 onResult(result.trim())
                             }
                         } catch (e: Exception) {
-                            android.os.Handler(android.os.Looper.getMainLooper()).post {
+                            Handler(Looper.getMainLooper()).post {
                                 onResult("Lỗi phân tích dữ liệu từ Python")
                             }
                         }
                     } else {
-                        android.os.Handler(android.os.Looper.getMainLooper()).post {
+                        Handler(Looper.getMainLooper()).post {
                             onResult("Lỗi Server Flask (${response.code})")
                         }
                     }

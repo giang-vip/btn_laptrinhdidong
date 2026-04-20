@@ -1,6 +1,8 @@
-package com.example.app_dich_quet_van_ban.presentation.viewmodel
+package com.example.app_dich_quet_van_ban.presentation.viewmodel.Viewmodel_Translate
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.app_dich_quet_van_ban.data.model.LangItem
 import com.google.mlkit.nl.translate.TranslateLanguage

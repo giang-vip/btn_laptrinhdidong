@@ -1,5 +1,4 @@
-
-package com.example.app_dich_quet_van_ban.presentation.screens
+package com.example.app_dich_quet_van_ban.presentation.screens.Screens_Scan
 import android.content.Context
 import android.content.Intent
 import com.example.app_dich_quet_van_ban.data.local.entity.ScannedDocEntity
@@ -22,15 +21,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.app_dich_quet_van_ban.presentation.navigation.Screen
 import com.example.app_dich_quet_van_ban.presentation.theme.*
-import com.example.app_dich_quet_van_ban.presentation.viewmodel.ScanViewModel
+import com.example.app_dich_quet_van_ban.presentation.viewmodel.Viewmodel_Scan.ScanViewModel
+import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -40,7 +44,7 @@ data class ScannedDoc(val name: String, val size: String, val date: String, val 
 
 @Composable
 fun ScanScreen(
-    viewModel: ScanViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    viewModel: ScanViewModel = viewModel(),
     navController: NavHostController, // Thêm cái này để thực hiện lệnh chuyển trang
     onNavigateToCamera: () -> Unit
 ) {
@@ -99,7 +103,7 @@ fun ScanScreen(
                 onDelete = { viewModel.deleteDocument(doc) },
                 onViewClick = {
                     // 1. Mã hóa nội dung để URL không bị lỗi nếu văn bản có dấu cách/xuống dòng
-                    val encodedContent = java.net.URLEncoder.encode(doc.content, "UTF-8")
+                    val encodedContent = URLEncoder.encode(doc.content, "UTF-8")
 
                     // 2. QUAN TRỌNG: Truyền ID của tệp này qua tham số docId
                     // Cấu trúc: Route + /Nội_dung?docId=Số_ID
@@ -139,7 +143,7 @@ fun HeaderBanner(onScanClick: () -> Unit) {
             Text(
                 "Quét tài liệu, trích xuất văn bản với AI và dịch tức thì.",
                 color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium
             )
             Spacer(modifier = Modifier.height(24.dp))
@@ -203,7 +207,7 @@ fun SyncStatusCard(current: Float, total: Float) {
                 modifier = Modifier.fillMaxWidth().height(8.dp),
                 color = MaterialTheme.colorScheme.primary,
                 trackColor = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.1f),
-                strokeCap = androidx.compose.ui.graphics.StrokeCap.Round
+                strokeCap = StrokeCap.Round
             )
             Spacer(Modifier.height(8.dp))
             Text(
@@ -325,7 +329,7 @@ fun shareText(context: Context, text: String) {
 @Composable
 fun ScanScreenPreview() {
     // 1. Tạo một cái navController "giả" chỉ dành riêng cho việc xem giao diện
-    val navController = androidx.navigation.compose.rememberNavController()
+    val navController = rememberNavController()
 
     AppDichQuetVanBanTheme {
         // 2. Truyền cái giả đó vào đây

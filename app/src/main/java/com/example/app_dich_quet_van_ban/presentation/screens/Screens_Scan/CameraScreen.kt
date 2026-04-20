@@ -1,5 +1,7 @@
-package com.example.app_dich_quet_van_ban.presentation.screens
+package com.example.app_dich_quet_van_ban.presentation.screens.Screens_Scan
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.util.Log
 import android.view.ViewGroup
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -33,7 +35,7 @@ import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
 import com.canhub.cropper.CropImageView
 import com.example.app_dich_quet_van_ban.presentation.theme.AppDichQuetVanBanTheme
-import com.example.app_dich_quet_van_ban.presentation.viewmodel.CaptureViewModel
+import com.example.app_dich_quet_van_ban.presentation.viewmodel.Viewmodel_Scan.CaptureViewModel
 import java.io.File
 
 @Composable
@@ -84,7 +86,7 @@ fun CameraScreen(
     }
     // Kiểm tra quyền (Giữ nguyên logic của bạn)
     val hasPermission = remember {
-        ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA) == android.content.pm.PackageManager.PERMISSION_GRANTED
+        ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
     }
 
     if (!hasPermission) {

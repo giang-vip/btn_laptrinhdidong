@@ -1,5 +1,6 @@
-package com.example.app_dich_quet_van_ban.presentation.screens
+package com.example.app_dich_quet_van_ban.presentation.screens.Screens_Scan
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -8,19 +9,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.app_dich_quet_van_ban.presentation.theme.AppDichQuetVanBanTheme
-import com.example.app_dich_quet_van_ban.presentation.viewmodel.ScanResultViewModel
+import com.example.app_dich_quet_van_ban.presentation.viewmodel.Viewmodel_Scan.ScanResultViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,7 +31,7 @@ fun ScanResultScreen(
     onNavigateBack: () -> Unit,
     viewModel: ScanResultViewModel = viewModel()
 ) {
-    val context = androidx.compose.ui.platform.LocalContext.current
+    val context = LocalContext.current
     val currentId by viewModel.currentDocId.collectAsState()
 
     var fileName by remember { mutableStateOf("") }
@@ -74,7 +75,7 @@ fun ScanResultScreen(
                 actions = {
                     TextButton(onClick = {
                         viewModel.saveNewDocument(fileName, textState, "Word") {
-                            android.widget.Toast.makeText(context, "Đã lưu tệp mới!", android.widget.Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Đã lưu tệp mới!", Toast.LENGTH_SHORT).show()
                         }
                     }) {
                         Text("LƯU MỚI", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
@@ -149,7 +150,7 @@ fun ScanResultScreen(
                 Button(
                     onClick = {
                         viewModel.updateCurrentDocument(fileName, textState, "Word") {
-                            android.widget.Toast.makeText(context, "Cập nhật thành công!", android.widget.Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Cập nhật thành công!", Toast.LENGTH_SHORT).show()
                         }
                     },
                     modifier = Modifier.weight(1f),
@@ -207,7 +208,7 @@ fun ScanResultScreenPreview() {
             ScanResultScreen(
                 scannedText = sampleText,
                 onNavigateBack = { /* Không làm gì trong Preview */ },
-                viewModel = androidx.lifecycle.viewmodel.compose.viewModel() // Sử dụng viewModel trong Preview
+                viewModel = viewModel() // Sử dụng viewModel trong Preview
                 // Lưu ý: Trong thực tế, bạn nên dùng MockViewModel nếu app phức tạp,
                 // nhưng với bài tập này, truyền tham số như trên là đủ để hiện giao diện.
             )
