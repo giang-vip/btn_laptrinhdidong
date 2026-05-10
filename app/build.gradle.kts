@@ -1,9 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-//    id("com.google.devtools.ksp") version "2.1.0-1.0.29" // Phiên bản này khớp với Kotlin 2.1.0
+    alias(libs.plugins.ksp) // Thêm dòng này
     id("org.jetbrains.kotlin.plugin.compose")
-    id("kotlin-kapt") // Quay lại dùng kapt
+//    id("kotlin-kapt") // Quay lại dùng kapt
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -59,7 +60,8 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.camera.core)
     implementation(libs.androidx.room.ktx)
-//    implementation(libs.generativeai)
+    implementation(libs.androidx.foundation)
+    //    implementation(libs.generativeai)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -67,13 +69,19 @@ dependencies {
     // Jetpack Navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
 
+// HILT - THÊM CỤM NÀY
+    implementation(libs.hilt.android)
+//    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose) // Rất quan trọng để dùng ViewModel trong NavGraph
 
     // ROOM (Giữ nguyên của bạn)
     val roomVersion = "2.7.0-alpha11"
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
-//    ksp("androidx.room:room-compiler:$roomVersion")
+//    kapt("androidx.room:room-compiler:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
+
 
     // ViewModel & LiveData
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
@@ -109,5 +117,7 @@ dependencies {
     // Đảm bảo bạn đã có dòng này (nếu chưa có thì thêm vào)
     implementation("androidx.concurrent:concurrent-futures-ktx:1.1.0")
 
-
+    // đc file excel
+//    implementation("org.apache.poi:poi:5.2.3")
+//    implementation("org.apache.poi:poi-ooxml:5.2.3")
 }

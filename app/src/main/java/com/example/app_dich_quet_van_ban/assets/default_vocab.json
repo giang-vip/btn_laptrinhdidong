@@ -1,0 +1,56 @@
+[
+  {
+    "folderName": "TOEIC Essential",
+    "description": "20 từ vựng sống còn cho mục tiêu 650+",
+    "colorHex": "#673AB7",
+    "words": [
+      {"word": "Abundant", "meaning": "Phong phú, nhiều", "example": "The country has abundant natural resources."},
+      {"word": "Accommodate", "meaning": "Cung cấp chỗ ở, đáp ứng", "example": "The hotel can accommodate up to 500 guests."},
+      {"word": "Adhere to", "meaning": "Tuân thủ", "example": "All staff must adhere to the safety regulations."},
+      {"word": "Approve", "meaning": "Tán thành, phê duyệt", "example": "The manager approved the budget."},
+      {"word": "Brief", "meaning": "Tóm tắt, ngắn gọn", "example": "The meeting was very brief."},
+      {"word": "Commitment", "meaning": "Sự cam kết", "example": "We look for commitment from our employees."},
+      {"word": "Conduct", "meaning": "Tiến hành, thực hiện", "example": "The company is conducting a survey."},
+      {"word": "Determine", "meaning": "Xác định, quyết định", "example": "We need to determine the cause of the problem."},
+      {"word": "Establish", "meaning": "Thiết lập", "example": "The firm was established in 1999."},
+      {"word": "Inquiry", "meaning": "Sự thẩm vấn, câu hỏi", "example": "I am writing in response to your inquiry."},
+      {"word": "Mandatory", "meaning": "Bắt buộc", "example": "Attendance at the meeting is mandatory."},
+      {"word": "Negotiate", "meaning": "Đàm phán", "example": "We are trying to negotiate a better deal."},
+      {"word": "Obligation", "meaning": "Nghĩa vụ, bổn phận", "example": "The company has an obligation to protect its workers."},
+      {"word": "Productive", "meaning": "Năng suất", "example": "The meeting was very productive."},
+      {"word": "Punctual", "meaning": "Đúng giờ", "example": "Please try to be punctual for the meeting."},
+      {"word": "Recruit", "meaning": "Tuyển dụng", "example": "We are looking to recruit new talent."},
+      {"word": "Submit", "meaning": "Nộp, đệ trình", "example": "Please submit your report by Friday."},
+      {"word": "Terminate", "meaning": "Chấm dứt, kết thúc", "example": "The contract was terminated early."},
+      {"word": "Upcoming", "meaning": "Sắp tới", "example": "The upcoming election is very important."},
+      {"word": "Valid", "meaning": "Có hiệu lực", "example": "Your passport must be valid for at least six months."}
+    ]
+  },
+  {
+    "folderName": "IELTS Academic",
+    "description": "20 từ nâng cao cho kỹ năng Writing & Reading",
+    "colorHex": "#1A3A5C",
+    "words": [
+      {"word": "Analyze", "meaning": "Phân tích", "example": "The researchers analyzed the results."},
+      {"word": "Approach", "meaning": "Cách tiếp cận", "example": "A new approach to teaching languages."},
+      {"word": "Benefit", "meaning": "Lợi ích", "example": "The new law will benefit many people."},
+      {"word": "Concept", "meaning": "Khái niệm", "example": "The concept of freedom is very important."},
+      {"word": "Context", "meaning": "Bối cảnh", "example": "You need to look at the word in context."},
+      {"word": "Data", "meaning": "Dữ liệu", "example": "The data shows a clear trend."},
+      {"word": "Distribute", "meaning": "Phân phối", "example": "The leaflets were distributed to local schools."},
+      {"word": "Evidence", "meaning": "Bằng chứng", "example": "There is no evidence to support this claim."},
+      {"word": "Factor", "meaning": "Yếu tố", "example": "Price is an important factor in our choice."},
+      {"word": "Function", "meaning": "Chức năng", "example": "The main function of the heart is to pump blood."},
+      {"word": "Identify", "meaning": "Xác định, nhận dạng", "example": "The police are trying to identify the suspect."},
+      {"word": "Interpret", "meaning": "Giải thích, phiên dịch", "example": "How do you interpret these results?"},
+      {"word": "Issue", "meaning": "Vấn đề", "example": "Climate change is a major global issue."},
+      {"word": "Method", "meaning": "Phương pháp", "example": "We need to find a better method of working."},
+      {"word": "Period", "meaning": "Giai đoạn", "example": "A period of rapid change."},
+      {"word": "Policy", "meaning": "Chính sách", "example": "The government's economic policy."},
+      {"word": "Principle", "meaning": "Nguyên tắc", "example": "The basic principles of physics."},
+      {"word": "Significant", "meaning": "Đáng kể, quan trọng", "example": "A significant increase in sales."},
+      {"word": "Theory", "meaning": "Lý thuyết", "example": "The theory of evolution."},
+      {"word": "Variable", "meaning": "Biến số", "example": "There are too many variables to consider."}
+    ]
+  }
+]

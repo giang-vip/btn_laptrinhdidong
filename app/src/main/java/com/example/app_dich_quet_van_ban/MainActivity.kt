@@ -9,13 +9,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.app_dich_quet_van_ban.presentation.components.BottomNavigationBar
 import com.example.app_dich_quet_van_ban.presentation.navigation.NavGraph
 import com.example.app_dich_quet_van_ban.presentation.theme.AppDichQuetVanBanTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         setContent {
             AppDichQuetVanBanTheme {
                 // Khởi tạo bộ điều khiển chuyển màn hình

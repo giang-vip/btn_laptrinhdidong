@@ -2,8 +2,11 @@ package com.example.app_dich_quet_van_ban.presentation.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -14,7 +17,15 @@ import com.example.app_dich_quet_van_ban.presentation.screens.Screens_Scan.Camer
 import com.example.app_dich_quet_van_ban.presentation.screens.Screens_Scan.ScanResultScreen
 import com.example.app_dich_quet_van_ban.presentation.screens.Screens_Scan.ScanScreen
 import com.example.app_dich_quet_van_ban.presentation.screens.Screens_Translate.TranslateScreen
+import com.example.app_dich_quet_van_ban.presentation.screens.Screens_Vocabulary.LibraryScreen
+import com.example.app_dich_quet_van_ban.presentation.screens.Screens_Vocabulary.AddFolderScreen
+import com.example.app_dich_quet_van_ban.presentation.screens.Screens_Vocabulary.AddWordScreen
+import com.example.app_dich_quet_van_ban.presentation.screens.Screens_Vocabulary.FolderDetailScreen
+import com.example.app_dich_quet_van_ban.presentation.screens.Screens_Vocabulary.FlashcardLearningScreen
+import com.example.app_dich_quet_van_ban.presentation.viewmodel.Viewmodel_Vocabulary.VocabularyViewModel
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavGraph(navController: NavHostController, paddingValues: PaddingValues) {
     NavHost(
@@ -93,8 +104,78 @@ fun NavGraph(navController: NavHostController, paddingValues: PaddingValues) {
             )
         }
 
-
         composable(Screen.Practice.route) { PracticeScreen() }
-        composable(Screen.Vocabulary.route) { VocabularyScreen() }
+//        composable(Screen.Vocabulary.route) { VocabularyScreen() }
+
+        // =========================================================
+        // --- VOCABULARY FLOW (đặt trực tiếp trong NavHost chính) ---
+        // =========================================================
+
+        // 6a. Library (danh sách folder)
+        composable(Screen.Library.route) {
+            LibraryScreen(
+                onNavigateToDetail = { folderId ->
+                    navController.navigate(Screen.FolderDetail.passFolderId(folderId))
+                },
+                onNavigateToAddFolder = {
+                    navController.navigate(Screen.AddFolder.route)
+                }
+            )
+        }
+
+        // 6b. Add Folder
+        composable(Screen.AddFolder.route) {
+            AddFolderScreen(
+                onBack = { navController.popBackStack() },
+                onFolderCreated = { navController.popBackStack() }
+            )
+        }
+
+        // 6c. Folder Detail
+        composable(
+            route = Screen.FolderDetail.route,
+            arguments = listOf(navArgument("folderId") { type = NavType.IntType })
+        ) { entry ->
+            val folderId = entry.arguments?.getInt("folderId") ?: 0
+            FolderDetailScreen(
+                folderId = folderId,
+                onBack = { navController.popBackStack() },
+                onAddWord = {
+                    navController.navigate(Screen.AddWord.passFolderId(folderId))
+                },
+                onStartSession = {
+                    navController.navigate(Screen.FlashcardLearn.passFolderId(folderId))
+                }
+            )
+        }
+
+        // 6d. Add Word
+        composable(
+            route = Screen.AddWord.route,
+            arguments = listOf(navArgument("folderId") { type = NavType.IntType })
+        ) { entry ->
+            val folderId = entry.arguments?.getInt("folderId") ?: 0
+            val viewModel: VocabularyViewModel = hiltViewModel()
+            AddWordScreen(
+                folderId = folderId,
+                viewModel = viewModel,
+                onBack = { navController.popBackStack() }
+            )
+        }
+
+        // 6e. Flashcard Learning
+        composable(
+            route = Screen.FlashcardLearn.route,
+            arguments = listOf(navArgument("folderId") { type = NavType.IntType })
+        ) { entry ->
+            val folderId = entry.arguments?.getInt("folderId") ?: 0
+            val viewModel: VocabularyViewModel = hiltViewModel()
+            FlashcardLearningScreen(
+                folderId = folderId,
+                viewModel = viewModel,
+                onBack = { navController.popBackStack() }
+            )
+        }
+
     }
 }

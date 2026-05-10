@@ -14,7 +14,7 @@ interface FolderDao {
     fun getFoldersByUser(userId: Int): Flow<List<FolderEntity>>
 
     @Insert
-    suspend fun insert(folder: FolderEntity)
+    suspend fun insert(folder: FolderEntity): Long
     @Update
     suspend fun update(folder: FolderEntity)
     @Delete

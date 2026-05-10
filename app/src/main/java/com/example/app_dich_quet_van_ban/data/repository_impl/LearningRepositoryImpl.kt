@@ -1,4 +1,4 @@
-package com.example.app_dich_quet_van_ban.data.repository.impl
+package com.example.app_dich_quet_van_ban.data.repository_impl
 
 import com.example.app_dich_quet_van_ban.data.local.dao.CardDao
 import com.example.app_dich_quet_van_ban.data.local.dao.HistoryDao

@@ -9,12 +9,7 @@ import androidx.room.PrimaryKey
     tableName = "reviews",
     indices = [Index(value = ["card_id", "user_id"], unique = true)], // Đảm bảo 1 user - 1 card chỉ có 1 trạng thái học
     foreignKeys = [
-        ForeignKey(
-            entity = CardEntity::class,
-            parentColumns = ["cardId"],
-            childColumns = ["card_id"],
-            onDelete = ForeignKey.CASCADE
-        ),
+        ForeignKey(entity = CardEntity::class, parentColumns = ["cardId"], childColumns = ["card_id"], onDelete = ForeignKey.CASCADE),
         ForeignKey(entity = UserEntity::class, parentColumns = ["userId"], childColumns = ["user_id"], onDelete = ForeignKey.CASCADE)
     ]
 )
@@ -26,5 +21,5 @@ data class ReviewEntity(
     val ease_factor: Double = 2.5,
     val interval: Int = 0,
     val next_review_timestamp: Long,
-    val status: String = "NEW"
+    val status: String = "NEW" // NEW, LEARNING, REVIEW
 )

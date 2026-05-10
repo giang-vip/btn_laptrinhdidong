@@ -21,5 +21,6 @@ data class FolderEntity(
     val userId: Int, // Khóa ngoại liên kết với Users
     val folderName: String,
     val description: String? = null,
+    val colorHex: String,
     val createdAt: Long = System.currentTimeMillis()
 )

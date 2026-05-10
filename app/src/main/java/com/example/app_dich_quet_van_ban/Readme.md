@@ -1,36 +1,40 @@
-app/src/main/java/com/yourname/translateapp/
+app/src/main/java/com/example/app_dich_quet_van_ban/
 │
-├── di/                                     # Dependency Injection (Hilt Modules)
-│   ├── DatabaseModule.kt                   # Cung cấp Room Database
-│   ├── NetworkModule.kt                    # Cung cấp Retrofit (nếu dùng API AI)
-│   └── RepositoryModule.kt                 # Kết nối Interface Domain và Impl ở Data
+├── constants/                             # Chứa các giá trị không đổi (Base URL, API Keys, định danh Database)
+│   └── AppConstants.kt
 │
-├── domain/                                 # LỚP LÕI (Logic nghiệp vụ thuần)
-│   ├── model/                              # Các Data Class (Translation, Word, User)
-│   ├── repository/                         # Các Interface (Bản thiết kế hệ thống)
-│   └── usecase/                            # Các logic xử lý đơn lẻ (TranslateUseCase, ScanOcrUseCase)
+├── di/                                    # Dependency Injection (Hilt) - Nơi khởi tạo các đối tượng dùng chung
+│   └── AppModule.kt                       # Cung cấp Database, Repository cho toàn bộ App
 │
-|
-|___constants                               # Các logic sử lí không đổi 
+├── domain/                                # LỚP LÕI (Nơi chứa logic nghiệp vụ, không phụ thuộc vào thư viện ngoài)
+│   ├── model/                             # Các kiểu dữ liệu dùng cho giao diện (LangItem, TranslationResult)
+│   ├── repository/                        # Các bản thiết kế (Interface) định nghĩa các tính năng (Vocabulary, Learning, Translate)
+│   └── usecase/                           # (Để trống hoặc bổ sung sau) Các hành động đơn lẻ như "Dịch văn bản", "Lật thẻ"
+│
+├── data/                                  # LỚP DỮ LIỆU (Triển khai thực tế các thiết kế từ Domain)
+│   ├── local/                             # Quản lý SQLite qua Room Database
+│   │   ├── AppDatabase.kt                 # Cấu hình chính của Database
+│   │   ├── dao/                           # Các câu lệnh SQL (Insert, Update, Delete, Query) cho từng bảng
+│   │   └── entity/                        # Định nghĩa cấu trúc các bảng (Card, Folder, User, ScannedDoc...)
+│   ├── remote/                            # Nơi gọi API bên ngoài (Dịch thuật, AI)
+│   ├── repository_impl/                   # Hiện thực hóa các Repository (Lấy dữ liệu từ Local hay Remote)
+│   ├── mapper/                            # Chuyển đổi qua lại giữa Entity (DB) và Model (UI)
+│   └── mock/                              # Dữ liệu giả (MockData) dùng để test giao diện nhanh
+│
+└── presentation/                          # LỚP GIAO DIỆN (UI & Logic Giao diện)
+├── navigation/                        # Quản lý luồng chuyển màn hình
+│   ├── Screen.kt                      # Định nghĩa tên các Route (Id màn hình)
+│   └── NavGraph.kt                    # Bản đồ kết nối các màn hình với nhau
+├── screens/                           # Chứa mã nguồn UI của từng màn hình (Compose)
+│   ├── Screens_Scan/                  # Nhóm màn hình Quét văn bản (Camera, Kết quả)
+│   ├── Screens_Translate/             # Nhóm màn hình Dịch thuật
+│   └── Screens_Vocabulary/            # Nhóm màn hình Từ vựng (Thư viện, Flashcard, Thêm từ)
+├── viewmodel/                         # Cầu nối dữ liệu giữa Data và Screen (Xử lý State và Event)
+├── components/                        # Các thành phần giao diện dùng chung (BottomBar, CustomButton)
+└── theme/                             # Cấu hình màu sắc, phông chữ toàn app
 
-├── data/                                   # LỚP DỮ LIỆU (Triển khai thực tế)
-│   ├── local/                              # SQLite / Room Database
-│   │   ├── AppDatabase.kt
-│   │   ├── dao/                            # Data Access Objects (SQL Queries)
-│   │   └── entity/                         # Table Definitions
-│   ├── remote/                             # Gọi API (Gemini, Google Cloud)
-│   ├── repository_impl/                    # Hiện thực hóa các Interface từ Domain
-│   └── mapper/                             # Chuyển đổi dữ liệu (DTO to Domain Model)
-│
-└── presentation/                           # LỚP GIAO DIỆN (MVVM)
-├── navigation/                         # <--- ĐÂY LÀ ROUTER CỦA BẠN
-│   ├── Screen.kt                       # Định nghĩa các Route (home, scan, history)
-│   └── NavGraph.kt                     # Quản lý luồng chuyển màn hình (Giống React Router)
-├── screens/                            # Các màn hình lớn (Home, Scan, Result, History)
-├── components/                         # Các UI nhỏ (CustomButton, LanguagePicker)
-├── viewmodel/                          # Quản lý State cho từng màn hình
-└── theme/                              # Cấu hình màu sắc, kiểu chữ (Material Design 3)
-
+LearningViewModel.kt
+VocabularyViewModel.kt
 bạn giúp mình tiết kế màu sắc đồng nhất giữa các màn hình sao cho phù hợp 
 với 1 app học tqapj dịch quét văn bản, học từ vựng flash card, luyện tập hỏi bài 
 hoặc luyện nói với al nếu có thể hãy giúp mình thiết kế sau khi sản phẩm gần 

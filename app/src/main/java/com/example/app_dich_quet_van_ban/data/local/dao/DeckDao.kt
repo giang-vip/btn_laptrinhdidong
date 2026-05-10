@@ -11,8 +11,8 @@ interface DeckDao {
     @Query("SELECT * FROM decks WHERE folderId = :folderId")
     fun getDecksByFolder(folderId: Int): Flow<List<DeckEntity>>
 
-    @Insert suspend fun insert(deck: DeckEntity)
-    @Update suspend fun update(deck: DeckEntity)
+    @Insert suspend fun insertDeck(deck: DeckEntity): Long
+    @Update suspend fun updateDeck(deck: DeckEntity)
     @Delete
-    suspend fun delete(deck: DeckEntity)
+    suspend fun deleteDeck(deck: DeckEntity)
 }

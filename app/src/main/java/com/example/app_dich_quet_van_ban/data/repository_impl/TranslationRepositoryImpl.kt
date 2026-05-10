@@ -1,8 +1,10 @@
+package com.example.app_dich_quet_van_ban.data.repository_impl
 import com.example.app_dich_quet_van_ban.data.local.dao.ScanDao
 import com.example.app_dich_quet_van_ban.data.local.entity.ScannedDocEntity
 import com.example.app_dich_quet_van_ban.domain.model.TranslationResult
 import com.example.app_dich_quet_van_ban.domain.repository.TranslationRepository
 import kotlinx.coroutines.flow.Flow
+
 
 class TranslationRepositoryImpl(private val scanDao: ScanDao) : TranslationRepository {
     // ... các hàm cũ giữ nguyên ...
