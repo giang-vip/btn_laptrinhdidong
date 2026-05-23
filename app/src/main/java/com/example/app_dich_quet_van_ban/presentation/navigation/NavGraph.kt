@@ -6,13 +6,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.app_dich_quet_van_ban.presentation.screens.* // Import tất cả màn hình
+import com.example.app_dich_quet_van_ban.presentation.screens.HomeScreen.HomeScreen
 import com.example.app_dich_quet_van_ban.presentation.screens.Screens_Scan.CameraScreen
 import com.example.app_dich_quet_van_ban.presentation.screens.Screens_Scan.ScanResultScreen
 import com.example.app_dich_quet_van_ban.presentation.screens.Screens_Scan.ScanScreen
@@ -38,7 +38,9 @@ fun NavGraph(navController: NavHostController, paddingValues: PaddingValues) {
             // Sửa lại đoạn này để khớp với HomeScreen
             HomeScreen(
                 onNavigateToTranslate = { navController.navigate(Screen.Translate.route) },
-                onNavigateToScan = { navController.navigate(Screen.Scan.route) }
+                onNavigateToScan = { navController.navigate(Screen.Scan.route) },
+                onNavigateToVocabulary = { navController.navigate(Screen.Library.route) }, // Truyền route màn hình từ vựng của bạn
+                onNavigateToChatAi = { navController.navigate(Screen.ChatAI.route) }       // Truyền route màn hình chat AI (PracticeScreen)
             )
         }
 
@@ -104,7 +106,7 @@ fun NavGraph(navController: NavHostController, paddingValues: PaddingValues) {
             )
         }
 
-        composable(Screen.Practice.route) { PracticeScreen() }
+        composable(Screen.ChatAI.route) { PracticeScreen() }
 //        composable(Screen.Vocabulary.route) { VocabularyScreen() }
 
         // =========================================================

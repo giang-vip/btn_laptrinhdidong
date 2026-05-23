@@ -19,7 +19,7 @@ sealed class Screen(
     object Home : Screen("home", "Home", Icons.Default.Home)
     object Translate : Screen("translate", "Dịch", Icons.Default.Language)
     object Scan : Screen("scan", "Quét", Icons.Default.QrCodeScanner)
-    object Practice : Screen("practice", "Luyện nói", Icons.Default.Mic)
+    object ChatAI : Screen("ChatAI", "Chat AI", Icons.Default.Mic)
     object Library : Screen("vocabulary", "Từ vựng", Icons.Default.Book)
 
     // --- NHÓM 2: CÁC MÀN HÌNH PHỤ/CHI TIẾT (KHÔNG HIỆN Ở BOTTOM BAR) ---
@@ -51,6 +51,6 @@ val bottomNavItems = listOf(
     Screen.Home,
     Screen.Translate,
     Screen.Scan,
-    Screen.Practice,
+    Screen.ChatAI,
     Screen.Library
 )

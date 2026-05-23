@@ -33,6 +33,7 @@ android {
         }
     }
     compileOptions {
+
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -120,4 +121,11 @@ dependencies {
     // đc file excel
 //    implementation("org.apache.poi:poi:5.2.3")
 //    implementation("org.apache.poi:poi-ooxml:5.2.3")
+    // --- KHỐI BẮT BUỘC ĐỂ SỬA LỖI DEXING / UNSUPPORTED FEATURE ---
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+
+    // --- THÊM MỚI: Thư viện Retrofit để chạy API Chat Ollama ---
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
 }

@@ -3,7 +3,7 @@ package com.example.app_dich_quet_van_ban.utils
 object AppConfig {
     // 1. Cấu hình Server Flask (Local)
     // Dùng 10.0.2.2 cho máy ảo, IP máy tính cho máy thật
-    private const val BASE_URL_LOCAL = "http://192.168.200.5:5000"
+    const val BASE_URL_LOCAL = "http://192.168.1.12:5000"
     const val SUMMARIZE_URL = "$BASE_URL_LOCAL/summarize"
     const val CHAT_URL = "$BASE_URL_LOCAL/chat"
 
